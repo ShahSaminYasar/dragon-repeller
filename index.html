@@ -5,11 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dragon Repeller</title>
-    <link rel="icon" href="arcade.jpg">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+      integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
+      <!-- After Win Transition Elements -->
+      <div class="layer layer1"></div>
+      <div class="layer layer2"></div>
+      <div class="layer layer3"></div>
+      <!-- <div class="layer layer4"></div> -->
+
+      <!-- Player Stats -->
       <div id="player-stats" class="flex">
         <span
           >XP: <strong><span id="xp">0</span></strong></span
@@ -21,6 +34,8 @@
           >Gold: <strong><span id="gold">50</span></strong></span
         >
       </div>
+
+      <!-- Monster Stats -->
       <div id="monster-stats" class="flex">
         <span
           >Monster Name:
@@ -33,17 +48,48 @@
           ></span
         >
       </div>
+
+      <!-- Game Buttons -->
       <div id="game-buttons" class="flex">
         <button id="button1">Go to store</button>
         <button id="button2">Go to cave</button>
         <button id="button3">Fight dragon</button>
       </div>
-      <div id="text-area">
-        Welcome to 'Dragon Repeller'. You need to fight the monsters to save
-        your city. Use the buttons above to perform actions. Defeating the
-        dragon will earn you a win.
+
+      <!-- Text Area -->
+      <div id="text-area-container">
+        <div id="text-area">
+          Welcome to 'Dragon Repeller'. You need to fight the monsters to save
+          your city. Use the buttons above to perform actions. Defeating the
+          dragon will earn you a win.
+        </div>
+
+        <!-- Inventory -->
+        <div id="inventory">
+          <span class="inventory_current_weapon_text"
+            >Current weapon: <span class="weapon-name">Bat</span></span
+          >
+          <img src="weapons/bat.png" alt="" class="weapon-image" />
+        </div>
+      </div>
+
+      <!-- Won Text -->
+      <div id="win-game" class="flex">
+        <h2>YOU WON THE GAME!</h2>
+      </div>
+
+      <!-- Won Text Area ~ Button Container -->
+      <div id="win-text-area">
+        <button id="win-btn">REPLAY?</button>
       </div>
     </div>
+
+    <footer id="footer">
+      &copy;2022 |
+      <a target="_blank" href="https://youtube.com/shahsaminyasar"
+        >SHAH SAMIN YASAR</a
+      >
+    </footer>
 
     <script src="script.js"></script>
   </body>
