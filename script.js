@@ -200,7 +200,7 @@ function buyWeapon() {
       textArea.innerText =
         "You have bought a new weapon.\nYou had: " + inventory;
       currentWeapon++;
-      updateWeaponImage;
+      updateWeaponImage();
       let newWeapon = weapons[currentWeapon].name;
       inventory.push(newWeapon);
       textArea.innerText += "\n\nNow you have in your inventory: " + inventory;
@@ -374,8 +374,8 @@ function restart() {
   xpText.innerText = xp;
   healthText.innerText = health;
   goldText.innerText = gold;
-  updateWeaponImage;
-  goTown;
+  updateWeaponImage();
+  goTown();
 }
 
 function townOrLottery() {
