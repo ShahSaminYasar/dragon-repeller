@@ -1,21 +1,37 @@
 // Importing/Connecting with HTML elements
+const container = document.querySelector(".container");
+const playerStats = document.getElementById("player-stats");
 const xpText = document.querySelector("#xp");
 const healthText = document.querySelector("#health");
 const goldText = document.querySelector("#gold");
 const monsterStats = document.querySelector("#monster-stats");
 const monsterNameText = document.querySelector("#monster-name");
 const monsterHealthText = document.querySelector("#monster-health");
+const gameButtons = document.querySelector("#game-buttons");
 const button1 = document.querySelector("#button1");
 const button2 = document.querySelector("#button2");
 const button3 = document.querySelector("#button3");
 const textArea = document.querySelector("#text-area");
+const textAreaContainer = document.querySelector("#text-area-container");
+const winGameText = document.querySelector("#win-game");
+const winGameTextArea = document.querySelector("#win-text-area");
+const replayBtn = document.querySelector("#win-btn");
+const weaponImage = document.querySelector(".weapon-image");
+const weaponNameContainer = document.querySelector(
+  ".inventory_current_weapon_text"
+);
+const weaponName = document.querySelector(".weapon-name");
+
+weaponImage.onclick = function () {
+  weaponNameContainer.classList.toggle("open-weapon-name");
+};
 
 // Ingame Values
 let xp = 0;
 let health = 100;
 let gold = 50;
 let currentWeapon = 0;
-let inventory = ["stick"];
+let inventory = ["bat"];
 let monster;
 let monsterName;
 let monsterHealth;
@@ -25,6 +41,9 @@ let monsterLevel;
 button1.onclick = goStore;
 button2.onclick = goCave;
 button3.onclick = fightDragon;
+
+// // Updating Weapon Image
+// let hello = 1;
 
 // Defining In Elements
 const locations = [
@@ -96,19 +115,19 @@ const locations = [
 
 const weapons = [
   {
-    name: "stick",
+    name: "Bat",
     power: 5,
   },
   {
-    name: "dagger",
+    name: "Dagger",
     power: 30,
   },
   {
-    name: "claw hammer",
+    name: "Claw-hammer",
     power: 50,
   },
   {
-    name: "sword",
+    name: "Sword",
     power: 100,
   },
 ];
@@ -147,7 +166,14 @@ function update(location) {
 function goTown() {
   update(locations[0]);
   healthText.style.color = "var(--silver)";
-  textArea.style.background = "var(--yellow)";
+  textAreaContainer.style.background = "var(--yellow)";
+  textArea.style.color = "black";
+  textArea.style.textAlign = "left";
+  gameButtons.style.background = "var(--orange-low)";
+  gameButtons.style.borderColor = "var(--orange)";
+  button1.style.background = "var(--orange)";
+  button2.style.background = "var(--orange)";
+  button3.style.background = "var(--orange)";
 }
 
 function goStore() {
@@ -174,6 +200,7 @@ function buyWeapon() {
       textArea.innerText =
         "You have bought a new weapon.\nYou had: " + inventory;
       currentWeapon++;
+      updateWeaponImage();
       let newWeapon = weapons[currentWeapon].name;
       inventory.push(newWeapon);
       textArea.innerText += "\n\nNow you have in your inventory: " + inventory;
@@ -186,6 +213,11 @@ function buyWeapon() {
     button2.innerText = "Sell weapon for 15 gold";
     button2.onclick = sellWeapon;
   }
+}
+
+function updateWeaponImage() {
+  weaponImage.src = "weapons/" + weapons[currentWeapon].name + ".png";
+  weaponName.innerText = weapons[currentWeapon].name;
 }
 
 function sellWeapon() {
@@ -257,6 +289,7 @@ function attack() {
 
   if (Math.random() <= 0.1 && inventory.length !== 1) {
     currentWeapon--;
+    updateWeaponImage();
     textArea.innerText =
       "Your weapon " + inventory.pop() + " broke. You now have: " + inventory;
   }
@@ -286,13 +319,18 @@ function dodge() {
 
 function lose() {
   update(locations[4]);
-  textArea.style.background = "var(--red)";
+  textAreaContainer.style.background = "red";
+  textArea.style.color = "darkred";
+  textArea.style.textAlign = "center";
   button1.style.display = "none";
   button2.style.display = "none";
+  button3.style.background = "red";
+  gameButtons.style.background = "rgba(255, 0, 0, 0.4)";
+  gameButtons.style.borderColor = "red";
 }
 
 function defeatMonster() {
-  textArea.style.background = "var(--green)";
+  textAreaContainer.style.background = "var(--green)";
   update(locations[5]);
   xp += monsterLevel;
   xpText.innerText = xp;
@@ -301,21 +339,38 @@ function defeatMonster() {
 }
 
 function wonGame() {
-  textArea.style.background = "var(--green)";
-  update(locations[6]);
+  // textArea.style.background = "var(--green)";
+  // update(locations[6]);
+  container.classList.add("won");
+  // winGameText.style.display = "block";
+  // winGameTextArea.style.display = "grid";
+  textAreaContainer.style.display = "none";
+  gameButtons.style.display = "none";
+  playerStats.style.display = "none";
+  monsterStats.style.display = "none";
 }
 
+replayBtn.onclick = restart;
+
 function restart() {
+  console.log("Restarted");
+  container.classList.remove("won");
   healthText.style.color = "var(--silver)";
-  textArea.style.background = "var(--yellow)";
+  textAreaContainer.style.background = "var(--yellow)";
   button1.style.display = "block";
   button2.style.display = "block";
+  // winGameText.style.display = "none";
+  // winGameTextArea.style.display = "none";
+  textAreaContainer.style.display = "block";
+  gameButtons.style.display = "flex";
+  playerStats.style.display = "flex";
+  monsterStats.style.display = "none";
 
   xp = 0;
   health = 100;
   gold = 50;
   currentWeapon = 0;
-  inventory = ["stick"];
+  inventory = ["bat"];
   xpText.innerText = xp;
   healthText.innerText = health;
   goldText.innerText = gold;
@@ -323,9 +378,9 @@ function restart() {
 }
 
 function townOrLottery() {
-  let randomNumber = Math.random();
+  let randomNumber = Math.floor(Math.random() * 10);
   console.log(randomNumber);
-  if (randomNumber < 0.3) {
+  if (randomNumber < 3) {
     secretGame();
   } else {
     goTown();
@@ -334,6 +389,12 @@ function townOrLottery() {
 
 function secretGame() {
   update(locations[7]);
+  textAreaContainer.style.background = "var(--secret-game-color)";
+  gameButtons.style.background = "var(--secret-game-color-low)";
+  gameButtons.style.borderColor = "var(--secret-game-color)";
+  button1.style.background = "var(--secret-game-color)";
+  button2.style.background = "var(--secret-game-color)";
+  button3.style.background = "var(--secret-game-color)";
 }
 
 function pickTwo() {
