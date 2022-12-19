@@ -305,7 +305,7 @@ function attack() {
 }
 
 function monsterIsHit() {
-  return Math.random < 0.5 || health <= 20;
+  return Math.random() < 0.5 || health <= 20;
 }
 
 function getMonsterAttackValue(level) {
