@@ -305,7 +305,13 @@ function attack() {
 }
 
 function monsterIsHit() {
-  return Math.random() < 0.5 || health <= 20;
+  let randomValue = Math.random();
+  console.log(randomValue);
+  if(randomValue < 0.5 || health <= 20){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function getMonsterAttackValue(level) {
