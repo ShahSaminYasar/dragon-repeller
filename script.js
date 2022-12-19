@@ -276,7 +276,7 @@ function attack() {
     weapons[currentWeapon].name +
     ".";
 
-  if (monsterIsHit) {
+  if (monsterIsHit()) {
     monsterHealth -=
       weapons[currentWeapon].power + Math.floor(Math.random() * xp) + 1;
     monsterHealthText.innerText = monsterHealth;
@@ -305,9 +305,9 @@ function attack() {
 }
 
 function monsterIsHit() {
-  let randomValue = Math.random();
-  console.log(randomValue);
-  if(randomValue < 0.5 || health <= 20){
+  let randomValue = Math.floor(Math.random() * 10);
+  // console.log(randomValue);
+  if (randomValue < 5 || health <= 20) {
     return true;
   } else {
     return false;
